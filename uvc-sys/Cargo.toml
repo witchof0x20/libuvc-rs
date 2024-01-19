@@ -18,5 +18,5 @@ uvc_debugging = ["uvc-src/uvc_debugging"]
 uvc-src = { path = "../uvc-src", version = "0.3.0", optional = true, features = ["jpeg"] }
 
 [build-dependencies]
-bindgen = "0.64.0"
+bindgen = "0.69.0"
 pkg-config = "0.3.29"

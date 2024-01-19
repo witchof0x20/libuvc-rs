@@ -17,7 +17,6 @@ fn main() {
                 .iter()
                 .map(|path| format!("-I{}", path.to_string_lossy())),
         );
-        println!("cargo:rustc-link-lib=uvc");
         if cfg!(target_os = "freebsd") {
             includedir = Some("/usr/local/include".to_owned());
         }
