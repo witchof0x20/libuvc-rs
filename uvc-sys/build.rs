@@ -10,7 +10,8 @@ fn main() {
         includedir = Some(std::env::var("DEP_UVCSRC_INCLUDE").unwrap());
     } else {
         let mut config = pkg_config::Config::new();
-        let lib = config.probe("uvc").unwrap();
+        let lib = config.probe("libuvc").unwrap();
+        dbg!(&lib);
         builder = builder.clang_args(
             lib.include_paths
                 .iter()
