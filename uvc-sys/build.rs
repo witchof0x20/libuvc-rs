@@ -5,16 +5,21 @@ use std::path::PathBuf;
 
 fn main() {
     let mut includedir = None;
+    let mut builder = bindgen::Builder::default();
     if std::env::var_os("CARGO_FEATURE_VENDOR").is_some() {
         includedir = Some(std::env::var("DEP_UVCSRC_INCLUDE").unwrap());
     } else {
+        let lib = pkg_config::probe_library("uvc").unwrap();
+        builder = builder.clang_args(
+            lib.include_paths
+                .iter()
+                .map(|path| format!("-I{}", path.to_string_lossy())),
+        );
         println!("cargo:rustc-link-lib=uvc");
         if cfg!(target_os = "freebsd") {
             includedir = Some("/usr/local/include".to_owned());
         }
     }
-
-    let mut builder = bindgen::Builder::default();
 
     if let Some(include) = includedir {
         builder = builder.clang_arg(format!("-I{}", include));
